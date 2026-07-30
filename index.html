@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Texas Virtual Health | Ivan G. Trowbridge, LPC</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- DESIGN SYSTEM VARIABLES --- */
+        :root {
+            --bg-cream: #fbf8f3;
+            --bg-card: #f3ede2;
+            --bg-card-hover: #ece3d5;
+            --dark-forest: #1b2820;
+            --dark-forest-hover: #26382d;
+            --terracotta: #c8825c;
+            --terracotta-hover: #b5714d;
+            --text-dark: #1e2420;
+            --text-muted: #6b726c;
+            --text-light: #fbf8f3;
+            --border-subtle: rgba(27, 40, 32, 0.08);
+            --font-serif: 'Cormorant Garamond', Georgia, serif;
+            --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+            
+            /* Fancy Gradients */
+            --grad-warm-glow: linear-gradient(135deg, rgba(200, 130, 92, 0.12) 0%, rgba(243, 237, 226, 0.8) 100%);
+            --grad-section-fade: linear-gradient(180deg, var(--bg-cream) 0%, rgba(243, 237, 226, 0.6) 50%, var(--bg-cream) 100%);
+            --grad-dark-overlay: linear-gradient(145deg, rgba(27, 40, 32, 0.95) 0%, rgba(200, 130, 92, 0.25) 100%);
+        }
+
+        /* --- RESET & BASE STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-serif);
+            font-weight: 500;
+            color: var(--dark-forest);
+            line-height: 1.15;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* --- GRADIENT SECTION SEPARATORS --- */
+        .gradient-divider {
+            height: 120px;
+            width: 100%;
+            background: linear-gradient(180deg, var(--bg-cream) 0%, rgba(243, 237, 226, 0.7) 50%, var(--bg-cream) 100%);
+            pointer-events: none;
+        }
+
+        /* --- FLOATING 988 CRISIS BADGE --- */
+        .floating-988 {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 9999;
+            background: rgba(242, 236, 225, 0.95);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 50px;
+            padding: 6px 18px 6px 6px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 0.88rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .floating-988:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.12);
+            background: #eae2d3;
+        }
+
+        .badge-988-circle {
+            background-color: #b83b33;
+            color: #ffffff;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.82rem;
+        }
+
+        /* --- NAVIGATION --- */
+        header {
+            background: rgba(251, 248, 243, 0.9);
+            backdrop-filter: blur(12px);
+            padding: 1.2rem 3rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(27, 40, 32, 0.06);
+            transition: all 0.4s ease;
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        /* INCREASED LOGO SIZE HERE */
+        .logo-img {
+            height: 64px; 
+            width: auto;
+            border-radius: 8px;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-container:hover .logo-img {
+            transform: scale(1.03);
+        }
+
+        .brand-name {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            color: var(--dark-forest);
+            font-weight: 600;
+            letter-spacing: -0.2px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--dark-forest);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        /* --- BUTTONS --- */
+        .btn-pill-dark {
+            background-color: var(--dark-forest);
+            color: var(--text-light);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-pill-dark:hover {
+            background-color: var(--dark-forest-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(27, 40, 32, 0.2);
+        }
+
+        .btn-terracotta {
+            background: linear-gradient(135deg, #d48b65 0%, var(--terracotta) 100%);
+            color: #ffffff;
+            padding: 0.9rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .btn-terracotta:hover {
+            background: linear-gradient(135deg, var(--terracotta) 0%, var(--terracotta-hover) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(200, 130, 92, 0.3);
+        }
+
+        .btn-outline-forest {
+            border: 1px solid var(--dark-forest);
+            color: var(--dark-forest);
+            padding: 0.85rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-outline-forest:hover {
+            background-color: var(--dark-forest);
+            color: var(--text-light);
+            transform: translateY(-2px);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 4rem 3rem 5rem 3rem;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+        }
+
+        .tag-pill {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(200,130,92,0.08) 0%, rgba(27,40,32,0.04) 100%);
+            border: 1px solid var(--border-subtle);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 5vw, 4.2rem);
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 520px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-right-container {
+            position: relative;
+        }
+
+        .hero-bg-img {
+            width: 100%;
+            height: 480px;
+            object-fit: cover;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+        }
+
+        /* Hero Quick Check Card */
+        .quick-check-card {
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: calc(100% - 20px);
+            background: linear-gradient(135deg, rgba(251, 248, 243, 0.95) 0%, rgba(243, 237, 226, 0.98) 100%);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255,255,255,0.8);
+            transition: transform 0.3s ease;
+        }
+
+        .quick-check-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .quick-check-card .card-subtitle {
+            font-size: 0.75rem;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: var(--terracotta);
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .quick-check-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .quick-check-card .hours-note {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1.4rem;
+        }
+
+        .insurance-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .insurance-badge {
+            background: #ffffff;
+            padding: 0.35rem 0.9rem;
+            border-radius: 50px;
+            font-size: 0.82rem;
+            color: var(--text-dark);
+            font-weight: 500;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+
+        /* --- THE APPROACH SECTION --- */
+        .section-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 4rem 3rem;
+            position: relative;
+        }
+
+        .bio-grid {
+            display: grid;
+            grid-template-columns: 0.95fr 1.05fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .bio-portrait {
+            width: 100%;
+            height: 520px;
+            object-fit: cover;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            transition: transform 0.4s ease;
+        }
+
+        .bio-portrait:hover {
+            transform: scale(1.01);
+        }
+
+        .bio-content .category-title {
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--terracotta);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .bio-content h2 {
+            font-size: clamp(2.4rem, 4vw, 3.2rem);
+            margin-bottom: 1.5rem;
+        }
+
+        .bio-content p {
+            font-size: 1.08rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-bullets {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .feature-bullets li {
+            position: relative;
+            padding-left: 1.8rem;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .feature-bullets li::before {
+            content: "•";
+            color: var(--terracotta);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -4px;
+        }
+
+        /* --- MEET YOUR THERAPIST SECTION WITH GRADIENT BACKGROUND --- */
+        .therapist-section {
+            background: linear-gradient(135deg, #f5ebd9 0%, #ece2d0 100%);
+            border-radius: 36px;
+            padding: 4.5rem;
+            margin: 3rem auto;
+            max-width: 1280px;
+            border: 1px solid rgba(200, 130, 92, 0.15);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.03);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .therapist-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 3.5rem;
+            align-items: center;
+        }
+
+        .therapist-img {
+            width: 100%;
+            height: 380px;
+            object-fit: cover;
+            border-radius: 24px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+        }
+
+        .therapist-details h3 {
+            font-size: clamp(2.2rem, 3.5vw, 2.8rem);
+            margin-bottom: 0.5rem;
+        }
+
+        .therapist-details .title-sub {
+            font-size: 1rem;
+            color: var(--terracotta);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+        
+        .therapist-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        /* --- INSURANCE SECTION --- */
+        .insurance-section {
+            text-align: center;
+            background: linear-gradient(180deg, var(--bg-cream) 0%, rgba(243, 237, 226, 0.5) 100%);
+            padding: 5rem 3rem;
+            position: relative;
+        }
+
+        .insurance-section h2 {
+            font-size: clamp(2.4rem, 4vw, 3.5rem);
+            margin-bottom: 1rem;
+        }
+
+        .insurance-section .subhead {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 3rem auto;
+        }
+
+        .insurance-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(243, 237, 226, 0.8);
+            border-radius: 28px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border: 1px solid var(--border-subtle);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            overflow: hidden;
+        }
+
+        .insurance-item {
+            padding: 3rem 1.5rem;
+            border-right: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-serif);
+            font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+            color: var(--dark-forest);
+            transition: background 0.3s ease;
+        }
+
+        .insurance-item:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .insurance-item:last-child {
+            border-right: none;
+        }
+
+        /* --- EVENING / SANCTUARY GRADIENT DARK SECTION --- */
+        .dark-sanctuary {
+            background: linear-gradient(135deg, rgba(20, 31, 24, 0.94) 0%, rgba(35, 52, 42, 0.92) 100%), 
+                        url('https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+            color: var(--text-light);
+            padding: 6rem 4rem;
+            border-radius: 36px;
+            margin: 4rem auto;
+            max-width: 1280px;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 3rem;
+            align-items: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .dark-sanctuary h2 {
+            color: var(--text-light);
+            font-size: clamp(2.4rem, 4vw, 3.5rem);
+            margin-bottom: 1.2rem;
+        }
+
+        .dark-sanctuary p {
+            color: rgba(251, 248, 243, 0.85);
+            font-size: 1.15rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .reflection-card-img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        .action-button-row {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: linear-gradient(180deg, var(--bg-cream) 0%, rgba(243, 237, 226, 0.6) 100%);
+            text-align: center;
+            padding: 4rem 2rem 6rem 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        footer strong {
+            color: var(--dark-forest);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .footer-links a {
+            color: var(--terracotta);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* --- RESPONSIVE MOBILE & SMARTPHONE LAYOUT --- */
+        @media (max-width: 960px) {
+            header {
+                padding: 1rem 1.2rem;
+            }
+
+            .logo-img {
+                height: 50px; /* Slightly reduced on smaller screens to preserve nav space */
+            }
+
+            .brand-name {
+                font-size: 1.3rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-buttons .btn-outline-forest {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 2.5rem 1.2rem 5rem 1.2rem;
+                gap: 2.5rem;
+            }
+
+            .quick-check-card {
+                position: relative;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                margin-top: -50px;
+                padding: 1.5rem;
+            }
+
+            .section-container {
+                padding: 3rem 1.2rem;
+            }
+
+            .bio-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+            }
+
+            .bio-portrait {
+                height: 380px;
+            }
+
+            .therapist-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .therapist-section {
+                padding: 2.5rem 1.5rem;
+                margin: 2rem 1rem;
+                border-radius: 28px;
+            }
+
+            .insurance-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .insurance-item {
+                border-bottom: 1px solid var(--border-subtle);
+            }
+            
+            .insurance-item:nth-child(even) {
+                border-right: none;
+            }
+
+            .dark-sanctuary {
+                grid-template-columns: 1fr;
+                padding: 3rem 1.5rem;
+                border-radius: 24px;
+                margin: 2rem 1rem;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .btn-terracotta, .btn-outline-forest, .btn-pill-dark {
+                width: 100%;
+                padding: 0.95rem;
+            }
+            
+            .action-button-row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .therapist-buttons {
+                flex-direction: column;
+            }
+            
+            .floating-988 {
+                left: 12px;
+                bottom: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- FLOATING 988 CRISIS BADGE -->
+    <a href="https://988lifeline.org/" target="_blank" rel="noopener noreferrer" class="floating-988" title="24/7 Suicide & Crisis Lifeline">
+        <div class="badge-988-circle">988</div>
+        <span>988 Crisis Support</span>
+    </a>
+
+    <!-- HEADER / NAVIGATION WITH ENLARGED LOGO -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo-container">
+                <img src="logo.png" onerror="this.onerror=null; this.src='logo.jpg';" alt="Texas Virtual Health Logo" class="logo-img">
+                <span class="brand-name">Texas Virtual Health</span>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#about">Approach</a></li>
+                <li><a href="#therapist">About Ivan</a></li>
+                <li><a href="#insurance">Insurance</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+            <div class="nav-buttons">
+                <a href="https://www.psychologytoday.com/profile/1798352" target="_blank" rel="noopener noreferrer" class="btn-outline-forest" style="border: none; font-weight: 500;">Psychology Today</a>
+                <a href="https://care.headway.co/providers/ivan-trowbridge?utm_source=pem&utm_medium=direct_link&utm_campaign=219702" target="_blank" rel="noopener noreferrer" class="btn-pill-dark">Book a Session</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-left">
+            <div class="tag-pill">Licensed Professional Counselor</div>
+            <h1>Therapy that meets you where you are</h1>
+            <p>Accessible, grounded virtual mental health care designed for busy lives across Texas — warm, practical, and unhurried.</p>
+        </div>
+
+        <div class="hero-right-container">
+            <!-- EMBEDDED TEXT-FREE HERO IMAGE -->
+            <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=1200&q=80" alt="Clean telehealth workspace" class="hero-bg-img">
+
+            <!-- Floating Quick Check Card -->
+            <div class="quick-check-card">
+                <div class="card-subtitle">Quick Check</div>
+                <h3>Virtual Telehealth Practice</h3>
+                <p class="hours-note">Serving clients statewide across Texas with convenient online appointments.</p>
+                
+                <div class="insurance-tags">
+                    <span class="insurance-badge">Aetna</span>
+                    <span class="insurance-badge">Cigna</span>
+                    <span class="insurance-badge">Ascension</span>
+                    <span class="insurance-badge">Carelon</span>
+                </div>
+
+                <a href="https://care.headway.co/providers/ivan-trowbridge?utm_source=pem&utm_medium=direct_link&utm_campaign=219702" target="_blank" rel="noopener noreferrer" class="btn-terracotta">Book on Headway</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FANCY SCROLL GRADIENT DIVIDER -->
+    <div class="gradient-divider"></div>
+
+    <!-- APPROACH SECTION (WITH REPLACED TELEHEALTH/COFFEE ON COUCH IMAGE) -->
+    <section class="section-container" id="about">
+        <div class="bio-grid">
+            <!-- REPLACED IMAGE: Comforting scene of a person in telehealth with laptop & warm coffee on couch -->
+            <img src="https://images.unsplash.com/photo-1588196749597-9ff075ee6b5b?auto=format&fit=crop&w=1200&q=80" alt="Person sipping warm coffee on a cozy couch during telehealth session" class="bio-portrait">
+            
+            <div class="bio-content">
+                <div class="category-title">The Approach</div>
+                <h2>A calm harbor between the day's chaos and rest.</h2>
+                <p>I offer a grounded, judgment-free space to untangle what the day left behind. Sessions are paced to your individual needs — warm, practical, and unhurried from the comfort of your own home.</p>
+                
+                <ul class="feature-bullets">
+                    <li>In-network billing — your coverage does the heavy lifting</li>
+                    <li>HIPAA-compliant, private video consultations</li>
+                    <li>Individualized therapy tailored to stress, anxiety, and life transitions</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- FANCY SCROLL GRADIENT DIVIDER -->
+    <div class="gradient-divider"></div>
+
+    <!-- MEET YOUR THERAPIST SECTION WITH SOFT WARM GRADIENT -->
+    <section id="therapist">
+        <div class="therapist-section">
+            <div class="therapist-grid">
+                <img src="portrait 2.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80';" alt="Ivan G. Trowbridge, LPC" class="therapist-img">
+                <div class="therapist-details">
+                    <h3>Ivan G. Trowbridge</h3>
+                    <div class="title-sub">Licensed Professional Counselor (LPC)</div>
+                    <p style="color: var(--text-muted); font-size: 1.05rem; line-height: 1.7;">
+                        As a Licensed Professional Counselor in Texas, I specialize in helping individuals navigate anxiety, burnout, relationship dynamics, and life transitions. My practice is built on creating an empathetic space where real progress happens at a sustainable pace.
+                    </p>
+                    
+                    <div class="therapist-buttons">
+                        <a href="https://care.headway.co/providers/ivan-trowbridge?utm_source=pem&utm_medium=direct_link&utm_campaign=219702" target="_blank" rel="noopener noreferrer" class="btn-pill-dark" style="width: auto;">Schedule Consultation</a>
+                        <a href="https://www.psychologytoday.com/profile/1798352" target="_blank" rel="noopener noreferrer" class="btn-outline-forest" style="width: auto;">View Psychology Today Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INSURANCE SECTION -->
+    <section class="insurance-section" id="insurance">
+        <div class="tag-pill">Frictionless Coverage</div>
+        <h2>Your insurance is your key.</h2>
+        <p class="subhead">If you are covered by any of the plans below, you are already most of the way to a session. No surprises, no fine print — just care.</p>
+
+        <div class="insurance-grid">
+            <div class="insurance-item">Aetna</div>
+            <div class="insurance-item">Cigna</div>
+            <div class="insurance-item">Ascension</div>
+            <div class="insurance-item">Carelon</div>
+        </div>
+    </section>
+
+    <!-- EVENING SANCTUARY WITH GRADIENT OVERLAY -->
+    <div id="contact">
+        <div class="dark-sanctuary">
+            <div>
+                <h2>Therapy when you're ready to take the next step.</h2>
+                <p>Check real-time availability, verify your insurance benefits instantly, or reach out with any questions prior to booking your initial consultation.</p>
+                
+                <div class="action-button-row">
+                    <a href="https://care.headway.co/providers/ivan-trowbridge?utm_source=pem&utm_medium=direct_link&utm_campaign=219702" target="_blank" rel="noopener noreferrer" class="btn-terracotta" style="width: auto;">Schedule via Headway</a>
+                    <a href="mailto:info@texasvirtualhealth.com" class="btn-outline-forest" style="border-color: rgba(255,255,255,0.4); color: #ffffff; width: auto;">Email the Practice</a>
+                </div>
+            </div>
+
+            <div>
+                <img src="https://images.unsplash.com/photo-1499209974431-9dddcece7f88?auto=format&fit=crop&w=800&q=80" alt="Blank journal for reflection" class="reflection-card-img">
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER WITH FADE GRADIENT -->
+    <footer>
+        <div>
+            <p>&copy; 2026 <strong>Texas Virtual Health</strong>. All rights reserved.</p>
+            <p style="margin-top: 6px;">Ivan G. Trowbridge, Licensed Professional Counselor (LPC)</p>
+        </div>
+        <div class="footer-links">
+            <a href="https://www.psychologytoday.com/profile/1798352" target="_blank" rel="noopener noreferrer">Psychology Today</a>
+            <a href="https://care.headway.co/providers/ivan-trowbridge?utm_source=pem&utm_medium=direct_link&utm_campaign=219702" target="_blank" rel="noopener noreferrer">Headway Profile</a>
+        </div>
+    </footer>
+
+</body>
+</html>
